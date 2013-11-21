@@ -45,7 +45,7 @@ public class ConcurrentSpider implements Runnable {
 		sharedData = data;
 		beginningURL = startURL;
 	}
-	
+
 	/**
 	 * The method that is executed when you 'start()' a thread with this class.
 	 * Thus, the thread behavior is here in this run method.
@@ -53,7 +53,7 @@ public class ConcurrentSpider implements Runnable {
 	public void run() {
 		// To get things started, we need one thread to put the starting point
 		// URL onto the work queue.
-		if (beginningURL != null) {  
+		if (beginningURL != null) {
 			try {
 				sharedData.getWork().put(beginningURL);
 			} catch (InterruptedException e) {
@@ -62,19 +62,21 @@ public class ConcurrentSpider implements Runnable {
 				e.printStackTrace();
 			}
 		}
-		
+
 		while (urlCount <= maxUrls) {  // each thread does a certain amount of 'work'
 			String url;
 
+
+
 				// you make this work: grab from the work queue and process the page
 
-			urlCount++;    
-		}
+            urlCount++;
+        }
 		System.err.println("ConcurrentSpider done with URLs");
 	}
-		
+
 	/**
-	 * Retrieves content from a url and processes that content. 
+	 * Retrieves content from a url and processes that content.
 	 * @param baseUrl
 	 * @param html
 	 */
@@ -84,6 +86,8 @@ public class ConcurrentSpider implements Runnable {
 			System.out.println("next URL on " + url + ":" + url2);
 			if (!helper.isImage(url2)) {
 				// you make this work: process the page here
+                WordCount counter = new WordCount(url2,urlCount);
+                counter.increment();
 
 			}
 		}
